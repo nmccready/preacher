@@ -8,3 +8,9 @@ node_modules/
 .versions
 .DS_Store
 dist/browserPreacher.js
+src
+LICENSE
+*.js
+*.html
+*.log
+README.md
