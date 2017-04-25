@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Preacher Test</title>
+  <script type="text/javascript" src="./dist/browserPreacher.js" ></script>
+  <script type="text/javascript">
+
+    const rootLogger = preacher({
+      loggerToWrap: console, // or $log
+      enable: 'demo,other', //,hidden to unhide
+      doFileLine: true});
+
+    const demoLogger = rootLogger('demo');
+    const otherLogger = rootLogger('other');
+    const hiddenLogger = rootLogger('hidden');
+
+    const log1 = demoLogger.spawn('worker1');
+    const log2 = demoLogger.spawn('worker2');
+    const log3 = demoLogger.spawn('worker3');
+    const log4 = otherLogger.spawn('worker4');
+
+    const log5 = hiddenLogger.spawn('worker5');
+
+    log1.error('not really an error.');
+    log1.info('info');
+    log1.warn('not really a warning.');
+    setInterval( () => log1.debug('one'), 1000);
+    // setInterval( () => log1.debug.red('red'), 1000); // works but color is only for node
+    setInterval(() =>  log2.debug(() => 'two'), 1100);
+    setInterval(() =>  log3.debug('three'), 1200);
+    setInterval(() =>  log4.debug(() => 'four'), 1150);
+    setInterval(() =>  {
+      // notice nothing is logged
+      hiddenLogger.debug(() => 'hidden root');
+      log5.debug(() => 'five');
+    }, 1155);
+
+  </script>
+</head>
+
+
+<body>
+  <h2>See Debug Console!</h2>
+</body>
+
+</html>

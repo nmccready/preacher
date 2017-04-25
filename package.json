@@ -1,0 +1,61 @@
+{
+  "name": "preacher",
+  "version": "0.0.1",
+  "description": "Logging wrapper to extend console or your favorite javascript logger.",
+  "main": "dist/index.js",
+  "scripts": {
+    "lint": "eslint *.js ./**/*.js --ignore-path ./.eslintignore --quiet",
+    "mocha": "mocha --colors --compilers js:babel-register $@",
+    "test": "npm run lint && mocha --colors --compilers js:babel-register ./test/**/*test.js ./test/*.test.js",
+    "build:browser": "webpack -p",
+    "build:node": "mkdir -p dist/ && babel ./src --out-dir dist",
+    "build": "npm run build:browser && npm run build:node",
+    "start": "webpack-dev-server --progress --inline --hot --open",
+    "prepublish": "npm run build:node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://www.github.com/nmccready/preacher"
+  },
+  "keywords": [
+    "logging",
+    "logger",
+    "lazy-eval",
+    "debug"
+  ],
+  "author": "Nicholas McCready",
+  "contributors": [
+    "Joe Ibershoff"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "color-wrap": "0.0.3",
+    "debug-fabulous": "0.1.X",
+    "memoizee": "0.4.X",
+    "object-assign": "4.1.X",
+    "stack-trace": "0.0.9"
+  },
+  "devDependencies": {
+    "babel-cli": "6.X",
+    "babel-core": "6.X",
+    "babel-eslint": "6.X",
+    "babel-loader": "6.X",
+    "babel-plugin-transform-class-properties": "6.X",
+    "babel-plugin-transform-export-extensions": "6.X",
+    "babel-plugin-transform-object-assign": "6.X",
+    "babel-plugin-transform-object-rest-spread": "6.X",
+    "babel-preset-es2015": "6.X",
+    "babel-preset-react": "6.X",
+    "babel-register": "6.X",
+    "bluebird": "3.X",
+    "chai": "3.X",
+    "eslint": "3.X",
+    "hook-std": "0.X",
+    "mocha": "3.X",
+    "rimraf": "2.X",
+    "sinon": "2.X",
+    "webpack": "2.X",
+    "webpack-dev-server": "2.X",
+    "winston": "2.X"
+  }
+}

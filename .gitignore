@@ -1,0 +1,16 @@
+*/*.iml
+*.iml
+.idea
+*/log/*
+log/
+logs/
+*.log
+tmp/
+.log
+#OSX
+.DS_Store
+
+coverage
+node_modules
+build
+dist
