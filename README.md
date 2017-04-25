@@ -6,7 +6,7 @@
 
 ## Goal
 
-- To easily integrate visionmedia's [debug](https://github.com/visionmedia/debug) into any javascript logging framework.
+- To easily integrate visionmedia's [debug](https://github.com/visionmedia/debug) into any javascript logging framework for node or the browser.
 - Lazy log level evaluation
 - Easy log namespace management via spawning.
 
@@ -32,6 +32,8 @@
 Basic Example:
 ```js
 const preacher = require('preacher');
+
+console.debug = console.log; // for example for node, no need in the browser
 
 const rootLogger = preacher({
   loggerToWrap: console, // or $log
