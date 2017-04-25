@@ -1,18 +1,25 @@
 {
   "name": "preacher",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Logging wrapper to extend console or your favorite javascript logger.",
   "main": "dist/index.js",
   "scripts": {
     "lint": "eslint *.js ./**/*.js --ignore-path ./.eslintignore --quiet",
     "mocha": "mocha --colors --compilers js:babel-register $@",
-    "test": "npm run lint && mocha --colors --compilers js:babel-register ./test/**/*test.js ./test/*.test.js",
+    "test": "npm run lint && mocha --colors --compilers js:babel-register ./test/*.test.js",
     "build:browser": "webpack -p",
     "build:node": "mkdir -p dist/ && babel ./src --out-dir dist",
     "build": "npm run build:browser && npm run build:node",
     "start": "webpack-dev-server --progress --inline --hot --open",
     "prepublish": "npm run build:node"
   },
+  "files": [
+    "dist/debug.js",
+    "dist/index.js",
+    "dist/logger.js",
+    "dist/logger.internals.js",
+    "dist/loggerFactory.js"
+  ],
   "repository": {
     "type": "git",
     "url": "http://www.github.com/nmccready/preacher"
