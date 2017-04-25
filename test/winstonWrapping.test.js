@@ -3,7 +3,7 @@ require('chai').should();
 const Promise = require('bluebird');
 const sinon = require('sinon');
 const preacher = require('../src');
-// const rimraf = 'rimraf';
+const rimraf = require('rimraf');
 
 let loggerToWrap = (logger = undefined);
 const { runTest } = require('./helpers/hookHelper');
@@ -17,14 +17,18 @@ debug.enable(debug.load());
 describe('wrapping winston', function() {
 
   beforeEach(function() {
-    // rimraf.sync('test.log')#keep log fresh
     let winston = require('winston');
     return loggerToWrap = new winston.Logger({
       level: 'debug',
       transports: [
         new winston.transports.Console({stderrLevels: logLevels}),
         new winston.transports.File({filename: 'test.log'})
-      ]});});
+      ]});
+  });
+
+  afterEach(function(done) {
+    rimraf('test.log', {}, done); //keep log fresh
+  });
 
   it('all nonLazy', function() {
     logger = preacher({
