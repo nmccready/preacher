@@ -12,7 +12,7 @@ function makeTestPackage(cb) {
 
 describe('publish: can load a published version', function() {
   it('publish: can load a published version', function(done) {
-    // return t.fail("mock fail");
+    this.timeout(10000);
     cleanUp(function() {
       makeTestPackage(function() {
         try {

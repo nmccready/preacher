@@ -1,6 +1,6 @@
 {
   "name": "preacher",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Logging wrapper to extend console or your favorite javascript logger.",
   "main": "dist/index.js",
   "scripts": {
@@ -14,11 +14,13 @@
     "prepublish": "npm run build:node"
   },
   "files": [
+    "dist/cachedLogger.js",
     "dist/debug.js",
     "dist/index.js",
     "dist/logger.js",
     "dist/logger.internals.js",
-    "dist/loggerFactory.js"
+    "dist/loggerFactory.js",
+    "yarn.lock"
   ],
   "repository": {
     "type": "git",

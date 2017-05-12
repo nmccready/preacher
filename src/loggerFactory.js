@@ -12,7 +12,7 @@ const ourDebug = require('./debug').spawn('loggerFactory');
 
   Returns a funciton to generate a base logger.
 */
-module.exports = function({loggerToWrap, debugApi, enable, levelFns, doFileLine, decorLevels}) {
+module.exports = function({loggerToWrap, debugApi, enable, levelFns, doFileLine, decorLevels, Logger}) {
   if (debugApi == null)
     debugApi = require('debug');
 
@@ -74,17 +74,18 @@ module.exports = function({loggerToWrap, debugApi, enable, levelFns, doFileLine,
   }
 
 
-  let Logger = require('./logger')({
+  let CachedLogger = require('./cachedLogger')({
     loggerToWrap,
     decorLevels,
     doFileLine,
     debugApi,
-    levelFns
+    levelFns,
+    Logger // if you so desire to override the internal Logger Wrapper with your own impl
   });
   ourDebug(() => 'Logger Bootstrapped');
 
   return function(baseNamespace) {
     ourDebug(() => 'creating log wrapper');
-    return Logger.getLogger(baseNamespace, '');
+    return CachedLogger.getLogger(baseNamespace, '');
   };
 };
