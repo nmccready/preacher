@@ -39,7 +39,7 @@
   "license": "MIT",
   "dependencies": {
     "color-wrap": "0.0.X",
-    "debug-fabulous": "0.1.X",
+    "debug-fabulous": "1.X",
     "memoizee": "0.4.X",
     "object-assign": "4.1.X",
     "stack-trace": "0.0.9"
