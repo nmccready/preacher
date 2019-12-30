@@ -2,69 +2,67 @@
   "name": "preacher",
   "version": "0.1.1",
   "description": "Logging wrapper to extend console or your favorite javascript logger.",
-  "main": "dist/index.js",
-  "scripts": {
-    "lint": "eslint *.js ./**/*.js --ignore-path ./.eslintignore --quiet",
-    "mocha": "mocha --colors --compilers js:babel-register $@",
-    "test": "npm run lint && mocha --colors --compilers js:babel-register ./test/*.test.js",
-    "build:browser": "webpack -p",
-    "build:node": "mkdir -p dist/ && babel ./src --out-dir dist",
-    "build": "npm run build:browser && npm run build:node",
-    "start": "webpack-dev-server --progress --inline --hot --open",
-    "prepublish": "npm run build:node"
-  },
-  "files": [
-    "dist/cachedLogger.js",
-    "dist/debug.js",
-    "dist/index.js",
-    "dist/logger.js",
-    "dist/logger.internals.js",
-    "dist/loggerFactory.js",
-    "yarn.lock"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "http://www.github.com/nmccready/preacher"
-  },
   "keywords": [
     "logging",
     "logger",
     "lazy-eval",
     "debug"
   ],
+  "repository": {
+    "type": "git",
+    "url": "http://www.github.com/nmccready/preacher"
+  },
+  "license": "MIT",
   "author": "Nicholas McCready",
   "contributors": [
     "Joe Ibershoff"
   ],
-  "license": "MIT",
+  "files": [
+    "dist/cachedLogger.js",
+    "dist/debug.js",
+    "dist/index.js",
+    "dist/logger.js",
+    "dist/logger.internals.js",
+    "dist/loggerFactory.js"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "yarn build:browser && yarn build:node",
+    "build:browser": "webpack -p",
+    "build:node": "mkdir -p dist/ && node -r esm ./node_modules/.bin/babel ./src --out-dir dist",
+    "lint": "eslint *.js ./src/**/*.js ./test/**/*.js",
+    "mocha": "mocha --colors --compilers js:@babel/register $@",
+    "prepare": "yarn sort-package-json && yarn js-common-prettierrc-clone",
+    "prepublish": "yarn build:node",
+    "start": "webpack-dev-server --progress --inline --hot --open",
+    "test": "yarn lint && yarn mocha ./test/*.test.js"
+  },
   "dependencies": {
     "color-wrap": "0.0.X",
-    "debug-fabulous": "1.X",
+    "debug-fabulous": "^2.0.1",
     "memoizee": "0.4.X",
     "object-assign": "4.1.X",
     "stack-trace": "0.0.9"
   },
   "devDependencies": {
-    "babel-cli": "6.X",
-    "babel-core": "6.X",
-    "babel-eslint": "6.X",
-    "babel-loader": "6.X",
-    "babel-plugin-transform-class-properties": "6.X",
-    "babel-plugin-transform-export-extensions": "6.X",
-    "babel-plugin-transform-object-assign": "6.X",
-    "babel-plugin-transform-object-rest-spread": "6.X",
-    "babel-preset-es2015": "6.X",
-    "babel-preset-react": "6.X",
-    "babel-register": "6.X",
+    "@typescript-eslint/eslint-plugin": "^1.11",
+    "@typescript-eslint/parser": "^1.11",
+    "@znemz/js-common-babel-config": "0.2.1",
+    "@znemz/js-common-eslint-config": "0.2.1",
+    "@znemz/js-common-prettierrc-clone": "0.2.1",
     "bluebird": "3.X",
     "chai": "3.X",
-    "eslint": "3.X",
+    "eslint": "5",
+    "eslint-plugin-prettier": "^3.1.2",
+    "esm": "3.X",
     "hook-std": "0.X",
     "mocha": "3.X",
     "rimraf": "2.X",
     "sinon": "2.X",
-    "webpack": "2.X",
-    "webpack-dev-server": "2.X",
+    "sort-package-json": "^1.32.2",
+    "typescript": "3.5",
+    "webpack": "3.X",
+    "webpack-dev-server": "3.X",
     "winston": "2.X"
   }
 }

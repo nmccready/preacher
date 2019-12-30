@@ -1,11 +1,12 @@
 const colorWrap = require('color-wrap');
 const internals = require('./logger.internals');
+
 const noop = () => {};
 
 class Logger {
-  constructor(base, namespace, {decorLevels, debugApi, loggerToWrap, doFileLine, levelFns}) {
+  constructor(base, namespace, { decorLevels, debugApi, loggerToWrap, doFileLine, levelFns }) {
     const ourDebug = require('./debug').spawn('logger');
-    ourDebug(() => ({ loggerToWrap, decorLevels, doFileLine, debugApi, levelFns}));
+    ourDebug(() => ({ loggerToWrap, decorLevels, doFileLine, debugApi, levelFns }));
 
     let augmentedNamespace, forceDebugFileAndLine;
     this.base = base;
@@ -15,13 +16,13 @@ class Logger {
     }
 
     if (this.namespace === '') {
-      augmentedNamespace = this.base+':__default_namespace__:';
+      augmentedNamespace = `${this.base}:__default_namespace__:`;
       forceDebugFileAndLine = true;
     } else {
       if (!this.namespace.endsWith(':')) {
         this.namespace += ':';
       }
-      augmentedNamespace = this.base+':'+this.namespace;
+      augmentedNamespace = `${this.base}:${this.namespace}`;
     }
 
     this.decorLevels = decorLevels;
@@ -32,14 +33,12 @@ class Logger {
       see: https://github.com/visionmedia/debug/blob/master/Readme.md
     */
     this.debugApi = debugApi;
-    let debugInstance = debugApi(augmentedNamespace);
-    //TODO: make this optional as an option
+    const debugInstance = debugApi(augmentedNamespace);
+    // TODO: make this optional as an option
     // this allows forwarding of debug to the underlying debug call if enabled
-    debugInstance.log = function() {
-      let out = [].slice.call(arguments, 0);
-      return loggerToWrap.debug.apply(loggerToWrap, out);
+    debugInstance.log = function log(...args) {
+      return loggerToWrap.debug(...args);
     };
-
 
     // add lazy eval, and maybe decorate output
     if (!debugInstance.enabled) {
@@ -51,8 +50,12 @@ class Logger {
     }
 
     // add lazy eval, and maybe decorate output to all other functions as well
-    for (let lvl of Array.from(levelFns)) {
-      let foundLevel = (this.decorLevels != null ? this.decorLevels.indexOf(lvl) : undefined) >= 0;
+    const levels = Array.from(levelFns);
+    // eslint-disable-next-line no-restricted-syntax, guard-for-in
+    for (const i in levels) {
+      const lvl = levels[i];
+      const foundLevel =
+        (this.decorLevels != null ? this.decorLevels.indexOf(lvl) : undefined) >= 0;
 
       if (!foundLevel) {
         // ourDebug -> '!foundLevel : ' + lvl
@@ -68,9 +71,11 @@ class Logger {
   }
 
   isEnabled(subNamespace) {
-    if (subNamespace == null) { subNamespace = ''; }
-    let suffix = (subNamespace !== '') && !subNamespace.endsWith(':') ? ':' : '';
-    return this.debugApi.enabled(this.namespace+subNamespace+suffix);
+    if (subNamespace == null) {
+      subNamespace = '';
+    }
+    const suffix = subNamespace !== '' && !subNamespace.endsWith(':') ? ':' : '';
+    return this.debugApi.enabled(this.namespace + subNamespace + suffix);
   }
 }
 

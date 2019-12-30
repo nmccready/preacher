@@ -1,4 +1,4 @@
-module.exports = function({ loggerToWrap, decorLevels, doFileLine, debugApi, levelFns, Logger}) {
+module.exports = ({ loggerToWrap, decorLevels, doFileLine, debugApi, levelFns, Logger }) => {
   const memoize = require('memoizee');
   const LoggerClass = Logger || require('./logger');
 
@@ -8,15 +8,15 @@ module.exports = function({ loggerToWrap, decorLevels, doFileLine, debugApi, lev
       debugApi,
       loggerToWrap,
       doFileLine,
-      levelFns
+      levelFns,
     });
   }
 
-  LoggerClass.prototype.spawn = function(subNamespace) {
+  LoggerClass.prototype.spawn = function spawn(subNamespace) {
     return getCachedLogger(this.base, this.namespace + subNamespace);
-  }
+  };
 
-  LoggerClass.getLogger = memoize(getCachedLogger, {primitive: true});
+  LoggerClass.getLogger = memoize(getCachedLogger, { primitive: true });
 
   return LoggerClass;
 };
